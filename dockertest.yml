@@ -19,4 +19,4 @@
          command: chdir=/home/edureka/dockeransible docker build -t myimage .
       
        - name: run the docker images
-         command: docker run -itd -p 80:89 myimage
+         command: docker run -itd -P myimage
