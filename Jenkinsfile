@@ -1,7 +1,8 @@
 pipeline {
-    agent any
+    agent none
     stages {
         stage('install puppet on slave') {
+            agent { label 'slaveNode'}
             steps {
                 echo 'Install Puppet'
                 sh "sudo apt-get install -y wget"
@@ -13,6 +14,7 @@ pipeline {
         }
 
         stage('configure and start puppet') {
+            agent { label 'slaveNode'}
             steps {
                 echo 'configure puppet'
                 sh "mkdir -p /etc/puppetlabs/puppet"
@@ -26,12 +28,14 @@ pipeline {
         }
 
         stage('SCM Checkout') {
+            agent { label 'slaveNode'}
             steps {
                 git 'https://github.com/banty105/edureka-project.git'
             }
         }
    
         stage('Execute Ansible') {
+            agent { label 'slaveNode'}
             steps {
                 ansiblePlaybook credentialsId: 'forjenkisns', disableHostKeyChecking: true, installation: 'myansible', inventory: 'slave.inv', playbook: 'dockertest.yml'
             }
