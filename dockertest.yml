@@ -1,0 +1,22 @@
+---
+   - become: true
+     become_user: root
+     hosts: slave
+     tasks:
+       - name: Install Docker
+         apt: name=docker.io state=present
+     
+       - name: start docker servcies
+         service: name=docker state=started
+
+       - name: create directory
+         file: path=/home/edureka/dockeransible state=directory
+
+       - name: get the file from github
+         git: repo=https://github.com/banty105/edureka-project.git dest=/home/edureka/dockeransible
+      
+       - name: build the docker file
+         command: chdir=/home/edureka/dockeransible docker build -t myimage .
+      
+       - name: run the docker images
+         command: docker run -itd -p 80:89 myimage
