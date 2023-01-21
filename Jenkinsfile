@@ -25,7 +25,6 @@ pipeline {
             }
         }
 
-       stages {
         stage('SCM Checkout') {
             steps {
                 git 'https://github.com/banty105/edureka-project.git'
