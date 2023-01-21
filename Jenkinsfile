@@ -1,5 +1,5 @@
 pipeline {
-    agent slaveNode
+    agent any
 
     stages {
         stage('SCM Checkout') {
